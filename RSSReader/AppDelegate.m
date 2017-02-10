@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "RSSViewController.h"
+#import "RSSFeedViewController.h"
 
 @implementation AppDelegate
 
@@ -16,7 +16,7 @@
   
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   UINavigationController *navigationController = [UINavigationController new];
-  navigationController.viewControllers = @[[RSSViewController new]];
+  navigationController.viewControllers = @[[RSSFeedViewController new]];
   self.window.rootViewController = navigationController;
   self.window.backgroundColor = [UIColor whiteColor];
   [self.window makeKeyAndVisible];
