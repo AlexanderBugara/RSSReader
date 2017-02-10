@@ -18,5 +18,6 @@
 - (void)save:(SMXMLDocument *)document mapper:(id<RSSMapperProtocol>)maper complitionHandler:(void(^)(void))complitionHandler;
 - (void)feedAsync:(void(^)(NSArray *result))complitionBlock;
 - (void)feedClearAsync:(NSArray *)feed complition:(void(^)(void))complitionBlock;
+- (NSArray *)feedSync;
 @end
 #endif /* RSSPersistentStorageProtocol_h */

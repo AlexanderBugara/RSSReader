@@ -55,53 +55,50 @@ complitionHandler:(void(^)(void))complitionHandler {
 
 - (void)feedAsync:(void(^)(NSArray *result))complitionBlock {
   NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:kItemEntity];
-  [[NSAsynchronousFetchRequest alloc] initWithFetchRequest:fetchRequest
+  NSAsynchronousFetchRequest *asyncRequest = [[NSAsynchronousFetchRequest alloc] initWithFetchRequest:fetchRequest
                                            completionBlock:^(NSAsynchronousFetchResult * _Nonnull result) {
                                              if (result.finalResult) {
+                                               for (RSSItem *item in result.finalResult) {
+                                                 NSLog(@"%@", item);
+                                               }
                                                complitionBlock(result.finalResult);
                                              }
   }];
+  
+  [self.managedObjectContext executeRequest:asyncRequest error:nil];
+  
 }
 
 - (void)feedClearAsync:(NSArray *)feed complition:(void(^)(void))complitionBlock {
   
-  NSManagedObjectContext *private = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-  [private setParentContext:self.managedObjectContext];
-  
   __weak NSManagedObjectContext *weakMainQueueContext = self.managedObjectContext;
-  [private performBlock:^{
-    
+  dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
     for (RSSItem *item in feed) {
-      RSSItem *privateItem = [weakMainQueueContext objectWithID:[item objectID]];
-      [private deleteObject:privateItem];
+      [weakMainQueueContext deleteObject:item];
     }
     
-    NSError *error = nil;
-    if (![private save:&error]) {
-      NSLog(@"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
-      abort();
-    }
     [weakMainQueueContext performBlockAndWait:^{
       NSError *error = nil;
       if (![weakMainQueueContext save:&error]) {
         NSLog(@"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
         abort();
       }
-      
-      complitionBlock();
     }];
-  }];
 
-//  [context performBlock:^{
-//    [context deleteObject:m];
-//    
-//    if (![context save:&error]) {
-//      //Note: You should really do something more useful than log this
-//      NSLog(@"Can't Delete! %@ %@", error, [error localizedDescription]);
-//    }
-//  }];
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+      complitionBlock();
+    });
+  });
 }
 
+
+
+- (NSArray *)feedSync {
+  NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:kItemEntity];
+  NSArray *result = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+  return result;
+  
+}
 #pragma mark - Core Data stack
 
 @synthesize managedObjectContext = _managedObjectContext;

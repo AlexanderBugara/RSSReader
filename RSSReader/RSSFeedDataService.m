@@ -14,6 +14,8 @@
 #import "RSSPersistentStorageProtocol.h"
 #import "RSSCoreDataStorage.h"
 #import "RSSMapper.h"
+#import "Sequencer.h"
+#import "RSSItem.h"
 
 @implementation RSSFeedDataService
 @synthesize networkManager = _networkManager;
@@ -22,28 +24,51 @@
 
 - (void)feedAsync:(void(^)(NSArray *result))complitionHandler {
   
+  Sequencer *sequencer = [[Sequencer alloc] init];
   
-  __weak __typeof(self) weakSelf = self;
-  [self.persistentStorage feedAsync:^(NSArray *result) {
-    [weakSelf.persistentStorage feedClearAsync:result complition:^{
-      [self.networkManager networkRequest:[self.urlConstructor feedUrl]
-                         complitinHendler:^(NSData *data, NSError *error) {
-                           
-                           SMXMLDocument *document = [SMXMLDocument documentWithData:data error:&error];
-                           
-                           __weak __typeof(self) weakSelf = self;
-                           
-                           [self.persistentStorage save:document mapper:[[RSSMapper new] autorelease] complitionHandler:^{
-                             [weakSelf.persistentStorage feedAsync:^(NSArray *result) {
-                               
-                             }];
-                           }];
-                           
-                         }];
+   __weak __typeof(self) weakSelf = self;
+  
+  [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
+    [weakSelf.persistentStorage feedAsync:^(NSArray *result) {
+      completion(result);
     }];
   }];
   
+  [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
+    [weakSelf.persistentStorage feedClearAsync:result complition:^{
+      completion(nil);
+    }];
+  }];
  
+  
+  [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
+    [self.networkManager networkRequest:[self.urlConstructor feedUrl]
+                       complitinHendler:^(NSData *data, NSError *error) {
+                         completion(data);
+                       }];
+  }];
+  
+  [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
+    NSError *error;
+    SMXMLDocument *document = [SMXMLDocument documentWithData:result error:&error];
+    completion(document);
+  }];
+  
+  [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
+    [weakSelf.persistentStorage save:result mapper:[[RSSMapper new] autorelease] complitionHandler:^{
+      completion(nil);
+    }];
+  }];
+  
+  [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
+    [weakSelf.persistentStorage feedAsync:^(NSArray *result) {
+    
+    }];
+  }];
+  
+  
+  [sequencer run];
+  
 }
 
 - (RSSNetworkManager *)networkManager {
