@@ -8,9 +8,6 @@
 
 #import "RSSNetworkManager.h"
 
-@interface RSSNetworkManager ()
-@property (nonatomic, retain) NSURLSession *session;
-@end
 
 @implementation RSSNetworkManager
 

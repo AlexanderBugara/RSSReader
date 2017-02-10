@@ -10,5 +10,9 @@
 
 
 @interface RSSURLConstructor : NSObject
+
+@property (nonatomic, retain, readonly) NSURL *base;
+
 - (NSURL *)feedUrl;
+
 @end

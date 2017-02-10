@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RSSFeedViewController : UITableViewController
+@class RSSFeedDataService, RSSFeedDataSource;
 
+@interface RSSFeedViewController : UITableViewController
+@property (nonatomic, retain, readonly) RSSFeedDataService *feedDataService;
+@property (nonatomic, retain, readonly) RSSFeedDataSource *dataSourse;
 @end

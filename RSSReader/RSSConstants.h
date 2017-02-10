@@ -13,7 +13,8 @@ extern NSString *const kBaseURL;
 extern NSString *const kSchemaURL;
 extern NSString *const kFeedPath;
 extern NSString *const kFeedKey;
-
+extern NSString *const kItem;
+extern NSString *const kItemEntity;
 
 @interface RSSConstants : NSObject
 

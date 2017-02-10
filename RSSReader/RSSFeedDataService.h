@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+@class RSSNetworkManager, RSSURLConstructor;
+@protocol RSSPersistentStorageProtocol;
+
 @interface RSSFeedDataService : NSObject
 - (void)feedAsync:(void(^)(NSArray *result))complitionHandler;
+
+@property (nonatomic, retain, readonly) RSSNetworkManager *networkManager;
+@property (nonatomic, retain, readonly) RSSURLConstructor *urlConstructor;
+@property (nonatomic, retain, readonly) id <RSSPersistentStorageProtocol> persistentStorage;
 @end

@@ -9,23 +9,21 @@
 #import "RSSURLConstructor.h"
 #import "RSSConstants.h"
 
-@interface RSSURLConstructor()
-@property (nonatomic, retain) NSURL *base;
-@end
 
 @implementation RSSURLConstructor
+@synthesize base = _base;
 
-- (instancetype)init {
-  if (self = [super init]) {
-    _base = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@",kSchemaURL, kBaseURL]];
-  }
-  return self;
-}
 
 - (NSURL *)feedUrl {
   return [NSURL URLWithString:kFeedPath relativeToURL:self.base];
 }
 
+- (NSURL *)base {
+  if (!_base) {
+      _base = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@",kSchemaURL, kBaseURL]];
+  }
+  return _base;
+}
 
 - (void)dealloc {
   [_base release];

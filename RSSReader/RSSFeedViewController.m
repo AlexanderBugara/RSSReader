@@ -8,37 +8,39 @@
 
 #import "RSSFeedViewController.h"
 #import "RSSFeedDataSource.h"
-#import "RSSFeedFacade.h"
-
-@interface RSSFeedViewController ()
-@property (strong, nonatomic, readonly) RSSFeedDataSource *dataSourse;
-@property (strong, nonatomic, readonly) RSSFeedFacade *facade;
-@end
+#import "RSSFeedDataService.h"
 
 @implementation RSSFeedViewController
-
-- (instancetype)init {
-  if (self = [super init]) {
-    _facade = [RSSFeedFacade new];
-    _dataSourse = [RSSFeedDataSource new];
-  }
-  return self;
-}
+@synthesize dataSourse = _dataSourse;
+@synthesize feedDataService = _feedDataService;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.facade feedAsync:^{
+    [self.feedDataService feedAsync:^(NSArray *result) {
       
     }];
-  
+}
+
+- (RSSFeedDataSource *)dataSourse {
+  if (!_dataSourse) {
+    _dataSourse = [RSSFeedDataSource new];
+  }
+  return _dataSourse;
+}
+
+- (RSSFeedDataService *)feedDataService {
+  if (!_feedDataService) {
+    _feedDataService = [RSSFeedDataService new];
+  }
+  return _feedDataService;
 }
 
 - (void)dealloc {
-  [super dealloc];
   [_dataSourse release];
   _dataSourse = nil;
-  [_facade release];
-  _facade = nil;
+  [_feedDataService release];
+  _feedDataService = nil;
+  [super dealloc];
 }
 
 @end
