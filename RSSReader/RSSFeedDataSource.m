@@ -36,4 +36,14 @@
   RSSItem *item = self.feed[indexPath.row];
   return [NSURL URLWithString:item.link];
 }
+
+- (NSString *)tittleAtIndexPath:(NSIndexPath *)indexPath {
+  RSSItem *item = self.feed[indexPath.row];
+  return item.title;
+}
+
+- (NSString *)descriptionAtIndexPath:(NSIndexPath *)indexPath {
+  RSSItem *item = self.feed[indexPath.row];
+  return item.description_;
+}
 @end

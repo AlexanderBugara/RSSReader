@@ -53,14 +53,12 @@
 }
 
 - (void)setupUI {
-  
   self.tableView.estimatedRowHeight = 500;
   self.tableView.rowHeight = UITableViewAutomaticDimension;
-  
-  [self.tableView registerClass:[RSSTableViewItemCell class] forCellReuseIdentifier:kCellItemIdentifier];
-  
+
   self.tableView.delegate = self;
   self.tableView.dataSource = self;
+  
 }
 
 #pragma mark - UITableView delegate
@@ -72,7 +70,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  
   RSSTableViewItemCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellItemIdentifier];
+  if (!cell)
+     cell = [[[RSSTableViewItemCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellItemIdentifier] autorelease];
+  
   [cell setFeedItem:[self.dataSourse objectAtIndexPath:indexPath]];
   return cell;
 }
@@ -85,4 +87,16 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+  CGRect titleFrame = [[self.dataSourse tittleAtIndexPath:indexPath] boundingRectWithSize:CGSizeMake([self width] , CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil];
+  
+  CGRect descriptionFrame = [[self.dataSourse descriptionAtIndexPath:indexPath] boundingRectWithSize:CGSizeMake([self width] , CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil];
+  
+  return titleFrame.size.height + descriptionFrame.size.height + 20;
+}
+
+- (CGFloat)width {
+  return self.view.frame.size.width;
+}
 @end
