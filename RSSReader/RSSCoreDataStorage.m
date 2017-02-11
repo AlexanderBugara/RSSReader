@@ -58,9 +58,6 @@ complitionHandler:(void(^)(void))complitionHandler {
   NSAsynchronousFetchRequest *asyncRequest = [[NSAsynchronousFetchRequest alloc] initWithFetchRequest:fetchRequest
                                            completionBlock:^(NSAsynchronousFetchResult * _Nonnull result) {
                                              if (result.finalResult) {
-                                               for (RSSItem *item in result.finalResult) {
-                                                 NSLog(@"%@", item);
-                                               }
                                                complitionBlock(result.finalResult);
                                              }
   }];

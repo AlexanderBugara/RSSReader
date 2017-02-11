@@ -9,16 +9,24 @@
 #import "RSSFeedViewController.h"
 #import "RSSFeedDataSource.h"
 #import "RSSFeedDataService.h"
+#import "RSSTableViewItemCell.h"
+#import "RSSConstants.h"
 
 @implementation RSSFeedViewController
 @synthesize dataSourse = _dataSourse;
 @synthesize feedDataService = _feedDataService;
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    [self.feedDataService feedAsync:^(NSArray *result) {
-      
-    }];
+  [super viewDidLoad];
+  
+  [self setupUI];
+  
+  __weak __typeof(self) weakSelf = self;
+  [self.feedDataService feedAsync:^(NSArray *result) {
+    [weakSelf.dataSourse setFeed:result];
+    [weakSelf.tableView reloadData];
+  }];
+  
 }
 
 - (RSSFeedDataSource *)dataSourse {
@@ -41,6 +49,31 @@
   [_feedDataService release];
   _feedDataService = nil;
   [super dealloc];
+}
+
+- (void)setupUI {
+  
+  self.tableView.estimatedRowHeight = 500;
+  self.tableView.rowHeight = UITableViewAutomaticDimension;
+  
+  [self.tableView registerClass:[RSSTableViewItemCell class] forCellReuseIdentifier:kCellItemIdentifier];
+  
+  self.tableView.delegate = self;
+  self.tableView.dataSource = self;
+}
+
+#pragma mark - UITableView delegate
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section {
+  return [self.dataSourse number];
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  RSSTableViewItemCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellItemIdentifier];
+  [cell setFeedItem:[self.dataSourse objectAtIndexPath:indexPath]];
+  return cell;
 }
 
 @end

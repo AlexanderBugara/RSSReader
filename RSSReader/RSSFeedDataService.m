@@ -62,7 +62,7 @@
   
   [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
     [weakSelf.persistentStorage feedAsync:^(NSArray *result) {
-    
+      complitionHandler(result);
     }];
   }];
   

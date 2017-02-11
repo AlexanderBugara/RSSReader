@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'BC3E81F702E785FD0947DA812AAB3A16'
+               BlueprintIdentifier = 'A7C4EB6F3408DA46DF7F973F1D53C05C'
                BlueprintName = 'Sequencer'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Sequencer.framework'>

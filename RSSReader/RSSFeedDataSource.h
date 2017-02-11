@@ -8,8 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol RSSDataSourceProtocol <NSObject>
+@class RSSItem;
 
+@protocol RSSDataSourceProtocol <NSObject>
+- (void)setFeed:(NSArray *)feed;
+- (NSUInteger)number;
+- (RSSItem *)objectAtIndexPath:(NSIndexPath *)indexPath;
 @end
 
 @interface RSSFeedDataSource : NSObject<RSSDataSourceProtocol>

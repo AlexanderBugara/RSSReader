@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Masonry.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-RSSReader.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>46496624479F030701BA4536FCCBCF68</key>
+		<key>3DBEF753B31CA4970E418B142F7DD902</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BC3E81F702E785FD0947DA812AAB3A16</key>
+		<key>A7C4EB6F3408DA46DF7F973F1D53C05C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D52144DE9D7255DE912490FF5A806573</key>
 		<dict>
 			<key>primary</key>
 			<true/>
