@@ -7,6 +7,7 @@
 //
 
 #import "RSSDetailViewController.h"
+#import "Masonry.h"
 
 @interface RSSDetailViewController ()
 @property (nonatomic, retain) NSURL *url;
@@ -34,6 +35,10 @@
   [self.view addSubview:webView];
   [webView loadRequest:[NSURLRequest requestWithURL:self.url]];
   [webView release];
+  
+  [webView mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.edges.equalTo(self.view);
+  }];
   
 }
 @end
