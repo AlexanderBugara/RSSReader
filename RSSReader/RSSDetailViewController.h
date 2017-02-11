@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RSSDetailViewController : UIViewController
-- (instancetype)initWithURL:(NSURL *)url;
+@interface RSSDetailViewController : UIViewController<UIWebViewDelegate>
+- (instancetype)initWithURL:(NSURL *)url title:(NSString *)title;
 @end

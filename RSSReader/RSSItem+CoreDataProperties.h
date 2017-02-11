@@ -2,7 +2,7 @@
 //  RSSItem+CoreDataProperties.h
 //  RSSReader
 //
-//  Created by Alexander on 2/10/17.
+//  Created by Alexander on 2/11/17.
 //  Copyright © 2017 Home. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,10 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RSSItem (CoreDataProperties)
 
-@property (nullable, nonatomic, retain) NSString *title;
-@property (nullable, nonatomic, retain) NSString *link;
 @property (nullable, nonatomic, retain) NSString *description_;
+@property (nullable, nonatomic, retain) NSString *link;
 @property (nullable, nonatomic, retain) NSDate *pubDate;
+@property (nullable, nonatomic, retain) NSString *title;
+@property (nullable, nonatomic, retain) RSSFeed *feed;
 
 @end
 

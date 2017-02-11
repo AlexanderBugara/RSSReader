@@ -13,11 +13,13 @@
 #define RSSPersistentStorageProtocol_h
 
 @protocol RSSMapperProtocol;
+@class RSSFeed;
 
 @protocol RSSPersistentStorageProtocol <NSObject>
 - (void)save:(SMXMLDocument *)document mapper:(id<RSSMapperProtocol>)maper complitionHandler:(void(^)(void))complitionHandler;
-- (void)feedAsync:(void(^)(NSArray *result))complitionBlock;
-- (void)feedClearAsync:(NSArray *)feed complition:(void(^)(void))complitionBlock;
+- (void)feedAsync:(void(^)(RSSFeed *feed))complitionBlock;
+- (void)itemsAsync:(void(^)(NSArray *result))complitionBlock;
+- (void)feedClearAsync:(RSSFeed *)feed complition:(void(^)(void))complitionBlock;
 - (NSArray *)feedSync;
 @end
 #endif /* RSSPersistentStorageProtocol_h */

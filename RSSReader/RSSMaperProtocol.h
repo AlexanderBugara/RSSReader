@@ -9,9 +9,10 @@
 #ifndef RSSMaperProtocol_h
 #define RSSMaperProtocol_h
 
-@class RSSItem, SMXMLElement;
+@class RSSItem, SMXMLElement, RSSFeed;
 
 @protocol RSSMapperProtocol <NSObject>
-- (void)map:(SMXMLElement *)element to:(RSSItem *)item;
+- (void)map:(SMXMLElement *)element toItem:(RSSItem *)item;
+- (void)map:(SMXMLElement *)element toFeed:(RSSFeed *)feed;
 @end
 #endif /* RSSMaperProtocol_h */

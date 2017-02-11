@@ -14,7 +14,9 @@ extern NSString *const kSchemaURL;
 extern NSString *const kFeedPath;
 extern NSString *const kFeedKey;
 extern NSString *const kItem;
+extern NSString *const kFeedTitle;
 extern NSString *const kItemEntity;
+extern NSString *const kFeedEntity;
 extern NSString *const kCellItemIdentifier;
 
 @interface RSSConstants : NSObject

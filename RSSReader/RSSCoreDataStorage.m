@@ -11,6 +11,7 @@
 #import "SMXMLDocument.h"
 #import "RSSMaperProtocol.h"
 #import "RSSItem.h"
+#import "RSSFeed.h"
 
 @implementation RSSCoreDataStorage
 - (void)save:(SMXMLDocument *)document 
@@ -26,14 +27,24 @@ complitionHandler:(void(^)(void))complitionHandler {
   __weak NSManagedObjectContext *weakMainQueueContext = self.managedObjectContext;
   [private performBlock:^{
     
+    RSSFeed *feed = nil;
     for (SMXMLElement *xmlObject in channel.children) {
+      
+      if ([xmlObject.name isEqualToString:kFeedTitle]) {
+        feed = (RSSFeed *)[NSEntityDescription insertNewObjectForEntityForName:kFeedEntity inManagedObjectContext:private];
+        [maper map:xmlObject toFeed:feed];
+      }
+      
       if (![xmlObject.name isEqualToString:kItem]) continue;
       
       RSSItem *item = (RSSItem *)[NSEntityDescription insertNewObjectForEntityForName:kItemEntity
                                                                inManagedObjectContext:private];
-      [maper map:xmlObject to:item];
+      [maper map:xmlObject toItem:item];
+      
+      [feed addItemsObject:item];
     }
     
+   
     
     NSError *error = nil;
     if (![private save:&error]) {
@@ -53,27 +64,44 @@ complitionHandler:(void(^)(void))complitionHandler {
 }
 
 
-- (void)feedAsync:(void(^)(NSArray *result))complitionBlock {
-  NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:kItemEntity];
+- (void)feedAsync:(void(^)(RSSFeed *feed))complitionBlock {
+  NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:kFeedEntity];
   NSAsynchronousFetchRequest *asyncRequest = [[NSAsynchronousFetchRequest alloc] initWithFetchRequest:fetchRequest
-                                           completionBlock:^(NSAsynchronousFetchResult * _Nonnull result) {
-                                             if (result.finalResult) {
-                                               complitionBlock(result.finalResult);
-                                             }
-  }];
+                                                                                      completionBlock:^(NSAsynchronousFetchResult * _Nonnull result) {
+                                                                                        if (result.finalResult && [result.finalResult count] > 0) {
+                                                                                          complitionBlock(result.finalResult[0]);
+                                                                                        } else {
+                                                                                          complitionBlock(nil);
+                                                                                        }
+                                                                                      }];
   
   [self.managedObjectContext executeRequest:asyncRequest error:nil];
   
 }
 
-- (void)feedClearAsync:(NSArray *)feed complition:(void(^)(void))complitionBlock {
+- (void)itemsAsync:(void(^)(NSArray *result))complitionBlock {
+  NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:kItemEntity];
+  NSAsynchronousFetchRequest *asyncRequest = [[NSAsynchronousFetchRequest alloc] initWithFetchRequest:fetchRequest
+                                                                                      completionBlock:^(NSAsynchronousFetchResult * _Nonnull result) {
+                                                                                        if (result.finalResult) {
+                                                                                          complitionBlock(result.finalResult);
+                                                                                        }
+                                                                                      }];
+  
+  [self.managedObjectContext executeRequest:asyncRequest error:nil];
+}
+
+- (void)feedClearAsync:(RSSFeed *)feed complition:(void(^)(void))complitionBlock {
+  
+  if (!feed) {
+    complitionBlock();
+    return;
+  }
   
   __weak NSManagedObjectContext *weakMainQueueContext = self.managedObjectContext;
   dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-    for (RSSItem *item in feed) {
-      [weakMainQueueContext deleteObject:item];
-    }
-    
+
+    [weakMainQueueContext deleteObject:feed];
     [weakMainQueueContext performBlockAndWait:^{
       NSError *error = nil;
       if (![weakMainQueueContext save:&error]) {

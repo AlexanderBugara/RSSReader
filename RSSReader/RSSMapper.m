@@ -9,9 +9,10 @@
 #import "RSSMapper.h"
 #import "SMXMLDocument.h"
 #import "RSSItem+CoreDataProperties.h"
+#import "RSSFeed.h"
 
 @implementation RSSMapper
-- (void)map:(SMXMLElement *)element to:(RSSItem *)item {
+- (void)map:(SMXMLElement *)element toItem:(RSSItem *)item {
   
   for (SMXMLElement *field in element.children) {
     
@@ -28,8 +29,20 @@
   }
 }
 
-- (NSDate *)dateFromString:(NSString *)sDate {
-  return [NSDate date];
+- (NSDate *)dateFromString:(NSString *)dateString {
+  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+  [dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
+  [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"PDT"]];
+  NSDate *dateFromString = [[NSDate alloc] init];
+  
+  dateFromString = [dateFormatter dateFromString:dateString];
+  
+  return dateFromString;
 }
 
+- (void)map:(SMXMLElement *)element toFeed:(RSSFeed *)feed {
+  if ([element.name isEqualToString:@"title"]) {
+    feed.title = element.value;
+  }
+}
 @end

@@ -13,9 +13,11 @@
 #import "RSSConstants.h"
 #import "RSSDetailViewController.h"
 
+
 @implementation RSSFeedViewController
 @synthesize dataSourse = _dataSourse;
 @synthesize feedDataService = _feedDataService;
+
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -23,11 +25,23 @@
   [self setupUI];
   
   __weak __typeof(self) weakSelf = self;
-  [self.feedDataService feedAsync:^(NSArray *result) {
-    [weakSelf.dataSourse setFeed:result];
-    [weakSelf.tableView reloadData];
+  [self.feedDataService feedAsync:^(RSSFeed *feed) {
+    
+    [weakSelf.dataSourse setFeed:feed complition:^{
+      weakSelf.navigationItem.title = weakSelf.dataSourse.feedTitle;
+      [weakSelf.tableView reloadData];
+    }];
+    
   }];
   
+}
+
+- (void)loadingDidStart {
+  self.navigationItem.title = NSLocalizedString(@"Loading...", @"Loading...");
+}
+
+- (void)loadingDidFinish {
+  self.navigationItem.title = self.dataSourse.feedTitle;
 }
 
 - (RSSFeedDataSource *)dataSourse {
@@ -82,7 +96,7 @@
 - (void)tableView:(UITableView *)tableView 
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  RSSDetailViewController *detailViewController = [[RSSDetailViewController alloc] initWithURL:[self.dataSourse urlAtIndexPath:indexPath]];
+  RSSDetailViewController *detailViewController = [[RSSDetailViewController alloc] initWithURL:[self.dataSourse urlAtIndexPath:indexPath] title:[self.dataSourse tittleAtIndexPath:indexPath]];
   
   [self.navigationController pushViewController:detailViewController animated:YES];
 }

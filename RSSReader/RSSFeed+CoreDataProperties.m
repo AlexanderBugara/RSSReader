@@ -1,21 +1,19 @@
 //
-//  RSSItem+CoreDataProperties.m
+//  RSSFeed+CoreDataProperties.m
 //  RSSReader
 //
-//  Created by Alexander on 2/10/17.
+//  Created by Alexander on 2/11/17.
 //  Copyright © 2017 Home. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
 //  to delete and recreate this implementation file for your updated model.
 //
 
-#import "RSSItem+CoreDataProperties.h"
+#import "RSSFeed+CoreDataProperties.h"
 
-@implementation RSSItem (CoreDataProperties)
+@implementation RSSFeed (CoreDataProperties)
 
 @dynamic title;
-@dynamic link;
-@dynamic description_;
-@dynamic pubDate;
+@dynamic items;
 
 @end

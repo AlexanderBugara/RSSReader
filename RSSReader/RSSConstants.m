@@ -13,7 +13,9 @@ NSString *const kSchemaURL = @"http";
 NSString *const kFeedPath = @"/main/rss/hotnews/hotnews.rss";
 NSString *const kFeedKey = @"channel";
 NSString *const kItem = @"item";
+NSString *const kFeedTitle = @"title";
 NSString *const kItemEntity = @"RSSItem";
+NSString *const kFeedEntity = @"RSSFeed";
 NSString *const kCellItemIdentifier = @"feed.cell";
 @implementation RSSConstants
 

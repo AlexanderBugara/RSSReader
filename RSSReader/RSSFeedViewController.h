@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RSSLoadingProtocol.h"
 
 @class RSSFeedDataService, RSSFeedDataSource;
 
-@interface RSSFeedViewController : UITableViewController
+
+@interface RSSFeedViewController : UITableViewController<RSSLoadingProtocol>
 @property (nonatomic, retain, readonly) RSSFeedDataService *feedDataService;
 @property (nonatomic, retain, readonly) RSSFeedDataSource *dataSourse;
 @end

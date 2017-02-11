@@ -22,10 +22,12 @@
 		11E2C0F11E4E24BB00C88BB9 /* RSSCoreDataStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 11E2C0F01E4E24BB00C88BB9 /* RSSCoreDataStorage.m */; };
 		11E2C12A1E4E2DBD00C88BB9 /* RSSReader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 11E2C1281E4E2DBD00C88BB9 /* RSSReader.xcdatamodeld */; };
 		11E2C12D1E4E2FE200C88BB9 /* RSSMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 11E2C12C1E4E2FE200C88BB9 /* RSSMapper.m */; };
-		11E2C1341E4E395800C88BB9 /* RSSItem+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 11E2C1311E4E395800C88BB9 /* RSSItem+CoreDataProperties.m */; };
-		11E2C1351E4E395800C88BB9 /* RSSItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 11E2C1331E4E395800C88BB9 /* RSSItem.m */; };
 		11E2C1381E4E6E3700C88BB9 /* RSSTableViewItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 11E2C1371E4E6E3700C88BB9 /* RSSTableViewItemCell.m */; };
 		11E2C13B1E4E976300C88BB9 /* RSSDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11E2C13A1E4E976300C88BB9 /* RSSDetailViewController.m */; };
+		11E2C14B1E4FA57300C88BB9 /* RSSFeed+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 11E2C1441E4FA57300C88BB9 /* RSSFeed+CoreDataProperties.m */; };
+		11E2C14C1E4FA57300C88BB9 /* RSSFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 11E2C1461E4FA57300C88BB9 /* RSSFeed.m */; };
+		11E2C14D1E4FA57300C88BB9 /* RSSItem+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 11E2C1481E4FA57300C88BB9 /* RSSItem+CoreDataProperties.m */; };
+		11E2C14E1E4FA57300C88BB9 /* RSSItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 11E2C14A1E4FA57300C88BB9 /* RSSItem.m */; };
 		D3FFBA6719377C448EC1B95D /* Pods_RSSReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 330D3C1B1D3998ED4C768A45 /* Pods_RSSReader.framework */; };
 /* End PBXBuildFile section */
 
@@ -71,14 +73,19 @@
 		11E2C12B1E4E2FE200C88BB9 /* RSSMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSSMapper.h; path = RSSReader/RSSMapper.h; sourceTree = "<group>"; };
 		11E2C12C1E4E2FE200C88BB9 /* RSSMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSSMapper.m; path = RSSReader/RSSMapper.m; sourceTree = "<group>"; };
 		11E2C12E1E4E30F300C88BB9 /* RSSMaperProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RSSMaperProtocol.h; path = RSSReader/RSSMaperProtocol.h; sourceTree = "<group>"; };
-		11E2C1301E4E395800C88BB9 /* RSSItem+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RSSItem+CoreDataProperties.h"; path = "RSSReader/CoreData/RSSItem+CoreDataProperties.h"; sourceTree = "<group>"; };
-		11E2C1311E4E395800C88BB9 /* RSSItem+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RSSItem+CoreDataProperties.m"; path = "RSSReader/CoreData/RSSItem+CoreDataProperties.m"; sourceTree = "<group>"; };
-		11E2C1321E4E395800C88BB9 /* RSSItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSSItem.h; path = RSSReader/CoreData/RSSItem.h; sourceTree = "<group>"; };
-		11E2C1331E4E395800C88BB9 /* RSSItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSSItem.m; path = RSSReader/CoreData/RSSItem.m; sourceTree = "<group>"; };
 		11E2C1361E4E6E3700C88BB9 /* RSSTableViewItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSTableViewItemCell.h; sourceTree = "<group>"; };
 		11E2C1371E4E6E3700C88BB9 /* RSSTableViewItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSTableViewItemCell.m; sourceTree = "<group>"; };
 		11E2C1391E4E976300C88BB9 /* RSSDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSDetailViewController.h; sourceTree = "<group>"; };
 		11E2C13A1E4E976300C88BB9 /* RSSDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSDetailViewController.m; sourceTree = "<group>"; };
+		11E2C13C1E4F8C4A00C88BB9 /* RSSLoadingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSSLoadingProtocol.h; path = RSSReader/RSSLoadingProtocol.h; sourceTree = "<group>"; };
+		11E2C1431E4FA57300C88BB9 /* RSSFeed+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RSSFeed+CoreDataProperties.h"; path = "RSSReader/RSSFeed+CoreDataProperties.h"; sourceTree = "<group>"; };
+		11E2C1441E4FA57300C88BB9 /* RSSFeed+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RSSFeed+CoreDataProperties.m"; path = "RSSReader/RSSFeed+CoreDataProperties.m"; sourceTree = "<group>"; };
+		11E2C1451E4FA57300C88BB9 /* RSSFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSSFeed.h; path = RSSReader/RSSFeed.h; sourceTree = "<group>"; };
+		11E2C1461E4FA57300C88BB9 /* RSSFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSSFeed.m; path = RSSReader/RSSFeed.m; sourceTree = "<group>"; };
+		11E2C1471E4FA57300C88BB9 /* RSSItem+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RSSItem+CoreDataProperties.h"; path = "RSSReader/RSSItem+CoreDataProperties.h"; sourceTree = "<group>"; };
+		11E2C1481E4FA57300C88BB9 /* RSSItem+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RSSItem+CoreDataProperties.m"; path = "RSSReader/RSSItem+CoreDataProperties.m"; sourceTree = "<group>"; };
+		11E2C1491E4FA57300C88BB9 /* RSSItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSSItem.h; path = RSSReader/RSSItem.h; sourceTree = "<group>"; };
+		11E2C14A1E4FA57300C88BB9 /* RSSItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSSItem.m; path = RSSReader/RSSItem.m; sourceTree = "<group>"; };
 		330D3C1B1D3998ED4C768A45 /* Pods_RSSReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RSSReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		549369C9FF6E1D4F7385B31E /* Pods-RSSReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RSSReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RSSReader/Pods-RSSReader.debug.xcconfig"; sourceTree = "<group>"; };
 		9F1FE2DF2B571EBBA4E4F213 /* Pods-RSSReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RSSReader.release.xcconfig"; path = "Pods/Target Support Files/Pods-RSSReader/Pods-RSSReader.release.xcconfig"; sourceTree = "<group>"; };
@@ -206,6 +213,7 @@
 			children = (
 				11E2C0F31E4E2BC800C88BB9 /* RSSPersistentStorageProtocol.h */,
 				11E2C12E1E4E30F300C88BB9 /* RSSMaperProtocol.h */,
+				11E2C13C1E4F8C4A00C88BB9 /* RSSLoadingProtocol.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -214,10 +222,14 @@
 			isa = PBXGroup;
 			children = (
 				11E2C1281E4E2DBD00C88BB9 /* RSSReader.xcdatamodeld */,
-				11E2C1301E4E395800C88BB9 /* RSSItem+CoreDataProperties.h */,
-				11E2C1311E4E395800C88BB9 /* RSSItem+CoreDataProperties.m */,
-				11E2C1321E4E395800C88BB9 /* RSSItem.h */,
-				11E2C1331E4E395800C88BB9 /* RSSItem.m */,
+				11E2C1431E4FA57300C88BB9 /* RSSFeed+CoreDataProperties.h */,
+				11E2C1441E4FA57300C88BB9 /* RSSFeed+CoreDataProperties.m */,
+				11E2C1451E4FA57300C88BB9 /* RSSFeed.h */,
+				11E2C1461E4FA57300C88BB9 /* RSSFeed.m */,
+				11E2C1471E4FA57300C88BB9 /* RSSItem+CoreDataProperties.h */,
+				11E2C1481E4FA57300C88BB9 /* RSSItem+CoreDataProperties.m */,
+				11E2C1491E4FA57300C88BB9 /* RSSItem.h */,
+				11E2C14A1E4FA57300C88BB9 /* RSSItem.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -389,7 +401,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11E2C14C1E4FA57300C88BB9 /* RSSFeed.m in Sources */,
 				11E2C0E21E4D2C5500C88BB9 /* RSSNetworkManager.m in Sources */,
+				11E2C14D1E4FA57300C88BB9 /* RSSItem+CoreDataProperties.m in Sources */,
+				11E2C14B1E4FA57300C88BB9 /* RSSFeed+CoreDataProperties.m in Sources */,
 				11E2C12D1E4E2FE200C88BB9 /* RSSMapper.m in Sources */,
 				11A5C3DA1E4CA00200BDDBC6 /* AppDelegate.m in Sources */,
 				11E2C0D01E4D24D400C88BB9 /* RSSFeedDataSource.m in Sources */,
@@ -401,10 +416,9 @@
 				11E2C1381E4E6E3700C88BB9 /* RSSTableViewItemCell.m in Sources */,
 				11A5C3D71E4CA00200BDDBC6 /* main.m in Sources */,
 				11E2C12A1E4E2DBD00C88BB9 /* RSSReader.xcdatamodeld in Sources */,
-				11E2C1351E4E395800C88BB9 /* RSSItem.m in Sources */,
-				11E2C1341E4E395800C88BB9 /* RSSItem+CoreDataProperties.m in Sources */,
 				11E2C13B1E4E976300C88BB9 /* RSSDetailViewController.m in Sources */,
 				11E2C0DB1E4D28EA00C88BB9 /* SMXMLDocument.m in Sources */,
+				11E2C14E1E4FA57300C88BB9 /* RSSItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

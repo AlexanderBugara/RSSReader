@@ -16,20 +16,21 @@
 #import "RSSMapper.h"
 #import "Sequencer.h"
 #import "RSSItem.h"
+#import "RSSFeed.h"
 
 @implementation RSSFeedDataService
 @synthesize networkManager = _networkManager;
 @synthesize urlConstructor = _urlConstructor;
 @synthesize persistentStorage = _persistentStorage;
 
-- (void)feedAsync:(void(^)(NSArray *result))complitionHandler {
+- (void)feedAsync:(void(^)(RSSFeed *result))complitionHandler {
   
   Sequencer *sequencer = [[Sequencer alloc] init];
   
    __weak __typeof(self) weakSelf = self;
   
   [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
-    [weakSelf.persistentStorage feedAsync:^(NSArray *result) {
+    [weakSelf.persistentStorage feedAsync:^(RSSFeed *feed) {
       completion(result);
     }];
   }];
@@ -61,7 +62,7 @@
   }];
   
   [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
-    [weakSelf.persistentStorage feedAsync:^(NSArray *result) {
+    [weakSelf.persistentStorage feedAsync:^(RSSFeed *result) {
       complitionHandler(result);
     }];
   }];
