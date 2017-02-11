@@ -8,6 +8,8 @@
 
 #import "RSSFeedDataSource.h"
 #import <UIKit/UIKit.h>
+#import "RSSItem.h"
+
 
 @interface RSSFeedDataSource()
 @property (nonatomic, retain) NSArray *feed;
@@ -30,4 +32,8 @@
   return self.feed[indexPath.row];
 }
 
+- (NSURL *)urlAtIndexPath:(NSIndexPath *)indexPath {
+  RSSItem *item = self.feed[indexPath.row];
+  return [NSURL URLWithString:item.link];
+}
 @end

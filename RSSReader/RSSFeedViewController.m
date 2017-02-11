@@ -11,6 +11,7 @@
 #import "RSSFeedDataService.h"
 #import "RSSTableViewItemCell.h"
 #import "RSSConstants.h"
+#import "RSSDetailViewController.h"
 
 @implementation RSSFeedViewController
 @synthesize dataSourse = _dataSourse;
@@ -74,6 +75,14 @@
   RSSTableViewItemCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellItemIdentifier];
   [cell setFeedItem:[self.dataSourse objectAtIndexPath:indexPath]];
   return cell;
+}
+
+- (void)tableView:(UITableView *)tableView 
+didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  RSSDetailViewController *detailViewController = [[RSSDetailViewController alloc] initWithURL:[self.dataSourse urlAtIndexPath:indexPath]];
+  
+  [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 @end

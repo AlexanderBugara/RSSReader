@@ -14,6 +14,7 @@
 - (void)setFeed:(NSArray *)feed;
 - (NSUInteger)number;
 - (RSSItem *)objectAtIndexPath:(NSIndexPath *)indexPath;
+- (NSURL *)urlAtIndexPath:(NSIndexPath *)indexPath;
 @end
 
 @interface RSSFeedDataSource : NSObject<RSSDataSourceProtocol>
