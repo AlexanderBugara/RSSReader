@@ -14,6 +14,10 @@
 #import "RSSDetailViewController.h"
 
 
+@interface RSSFeedViewController()
+@property (assign) BOOL isLoadingInProgress;
+@end
+
 @implementation RSSFeedViewController
 @synthesize dataSourse = _dataSourse;
 @synthesize feedDataService = _feedDataService;
@@ -24,21 +28,25 @@
   
   [self setupUI];
   
-  [self startLoading];
+  [self beginLoading];
+  [self updateTable];
   __weak __typeof(self) weakSelf = self;
-  [self.feedDataService updateDataSourceOnlineIfNeedIt:^{
-    [weakSelf stopLoading];
-    [weakSelf.tableView reloadData];
+  [self.feedDataService getDataSourceOnlineIfNeedIt:^(NSError *error) {
+    
+    [weakSelf endLoading];
+    [weakSelf updateTable];
   }];
   
 }
 
-- (void)startLoading {
+- (void)beginLoading {
+  self.isLoadingInProgress = YES;
   self.navigationItem.title = NSLocalizedString(@"Loading...", @"Loading...");
 }
 
-- (void)stopLoading {
-  self.navigationItem.title = self.dataSourse.feedTitle;
+- (void)endLoading {
+  self.isLoadingInProgress = NO;
+  self.navigationItem.title = ([self.dataSourse.feedTitle length] > 0)?self.dataSourse.feedTitle:@"";
 }
 
 - (RSSFeedDataSource *)dataSourse {
@@ -78,8 +86,8 @@
 
 - (void)setupPullToRefresh {
   self.refreshControl = [[UIRefreshControl alloc] init];
-  self.refreshControl.backgroundColor = [UIColor purpleColor];
-  self.refreshControl.tintColor = [UIColor whiteColor];
+  self.refreshControl.backgroundColor = [UIColor whiteColor];
+  self.refreshControl.tintColor = [UIColor grayColor];
   [self.refreshControl addTarget:self
                           action:@selector(updateData:)
                 forControlEvents:UIControlEventValueChanged];
@@ -88,10 +96,43 @@
 #pragma mark - Pull to refresh action
 
 - (void)updateData:(id)sender {
+  if (self.isLoadingInProgress) return;
   
+  __weak __typeof(self) weakSelf = self;
+  
+  [self beginLoading];
+  [self.feedDataService feedUpdateIfNeedItAsync:^(NSError *error) {
+    [(UIRefreshControl *)sender endRefreshing];
+    [weakSelf endLoading];
+    [weakSelf updateTable];
+  }];
 }
 
 #pragma mark - UITableView delegate
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+  
+  if ([self.dataSourse number] == 0 && !self.isLoadingInProgress) {
+    UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    
+    messageLabel.text = @"No data is currently available. Please pull down to refresh.";
+    messageLabel.textColor = [UIColor blackColor];
+    messageLabel.numberOfLines = 0;
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.font = [UIFont fontWithName:@"Palatino-Italic" size:20];
+    [messageLabel sizeToFit];
+    
+    self.tableView.backgroundView = messageLabel;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+  } else {
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    return 1;
+  }
+  
+  return 0;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
   return [self.dataSourse number];
@@ -128,5 +169,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (CGFloat)width {
   return self.view.frame.size.width;
+}
+
+- (void)updateTable {
+  [self.tableView reloadData];
 }
 @end

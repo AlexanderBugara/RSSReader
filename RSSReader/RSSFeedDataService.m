@@ -24,36 +24,37 @@
 @synthesize persistentStorage = _persistentStorage;
 @synthesize dataSource = _dataSource;
 
-- (void)feedUpdateAsync:(void(^)(RSSFeed *result))complitionHandler {
+- (void)feedUpdateIfNeedItAsync:(void(^)(NSError *error))complitionHandler {
   
   Sequencer *sequencer = [[Sequencer alloc] init];
   
    __weak __typeof(self) weakSelf = self;
   
   [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
-    [weakSelf.persistentStorage feedAsync:^(RSSFeed *feed) {
-      completion(result);
-    }];
-  }];
-  
-  [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
-    [weakSelf.persistentStorage feedClearAsync:result complition:^{
-      completion(nil);
-    }];
-  }];
- 
-  
-  [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
-    [self.networkManager networkRequest:[self.urlConstructor feedUrl]
+    [weakSelf.networkManager networkRequest:[weakSelf.urlConstructor feedUrl]
                        complitinHendler:^(NSData *data, NSError *error) {
-                         completion(data);
+                         if (error) complitionHandler(error);
+                         else completion(data);
                        }];
   }];
   
   [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
     NSError *error;
     SMXMLDocument *document = [SMXMLDocument documentWithData:result error:&error];
-    completion(document);
+    
+    if (error)  complitionHandler(error);
+    else completion(document);
+  }];
+  
+  [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
+    
+    [weakSelf.persistentStorage feedAsync:^(RSSFeed *feed) {
+      [weakSelf.persistentStorage feedClearAsync:feed complition:^{
+        completion(result);
+      }];
+    }];
+    
+    
   }];
   
   [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
@@ -63,11 +64,16 @@
   }];
   
   [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
-    [weakSelf.persistentStorage feedAsync:^(RSSFeed *result) {
-      complitionHandler(result);
+    [weakSelf.persistentStorage feedAsync:^(RSSFeed *feed) {
+      completion(feed);
     }];
   }];
   
+  [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
+    [weakSelf.dataSource setFeed:result complition:^{
+      complitionHandler(nil);
+    }];
+  }];
   
   [sequencer run];
   
@@ -128,29 +134,6 @@
   return self;
 }
 
-- (void)updateDataSourceOffline:(void(^)(void))complitionHandler {
-  
-  __weak __typeof(self) weakSelf = self;
-  
-  [self.persistentStorage feedAsync:^(RSSFeed *feed) {
-    [weakSelf.dataSource setFeed:feed complition:^{
-      complitionHandler();
-    }];
-  }];
-  
-}
-
-- (void)updateDataSourceOnline:(void(^)(void))complitionHandler {
-  
-  __weak __typeof(self) weakSelf = self;
-  
-  [self feedUpdateAsync:^(RSSFeed *feed) {
-    [weakSelf.dataSource setFeed:feed complition:^{
-      complitionHandler();
-    }];
-  }];
-}
-
 - (instancetype)init {
   [self release];
   @throw [NSException exceptionWithName:NSInternalInconsistencyException
@@ -159,7 +142,7 @@
   return nil;
 }
 
-- (void)updateDataSourceOnlineIfNeedIt:(void(^)(void))complitionHandler {
+- (void)getDataSourceOnlineIfNeedIt:(void(^)(NSError *error))complitionHandler {
   __weak __typeof(self) weakSelf = self;
 
   Sequencer *sequencer = [[Sequencer alloc] init];
@@ -168,7 +151,7 @@
     [self.persistentStorage feedAsync:^(RSSFeed *feed) {
       if (feed) {
         [weakSelf.dataSource setFeed:feed complition:^{
-          complitionHandler();
+          complitionHandler(nil);
         }];
       } else {
         completion(feed);
@@ -177,9 +160,10 @@
   }];
 
   [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
-    [self.networkManager networkRequest:[self.urlConstructor feedUrl]
+    [weakSelf.networkManager networkRequest:[weakSelf.urlConstructor feedUrl]
                        complitinHendler:^(NSData *data, NSError *error) {
-                         completion(data);
+                         if (error) complitionHandler(error);
+                         else completion(data);
                        }];
   }];
   
@@ -196,14 +180,14 @@
   }];
   
   [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
-    [weakSelf.persistentStorage feedAsync:^(RSSFeed *result) {
-      completion(result);
+    [weakSelf.persistentStorage feedAsync:^(RSSFeed *feed) {
+      completion(feed);
     }];
   }];
   
   [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
     [weakSelf.dataSource setFeed:result complition:^{
-      complitionHandler();
+      complitionHandler(nil);
     }];
   }];
   [sequencer run];

@@ -14,7 +14,7 @@
 
 @protocol RSSFeedDataServiceProtocol <NSObject>
 - (instancetype)initWithDataSource:(id <RSSDataSourceProtocol>) dataSource;
-- (void)updateDataSourceOffline:(void(^)(void))complitionHandler;
-- (void)updateDataSourceOnlineIfNeedIt:(void(^)(void))complitionHandler;
+- (void)getDataSourceOnlineIfNeedIt:(void(^)(NSError *error))complitionHandler;
+- (void)feedUpdateIfNeedItAsync:(void(^)(NSError *error))complitionHandler;
 @end
 #endif /* RSSFeedDataServiceProtocol_h */

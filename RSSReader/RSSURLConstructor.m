@@ -20,7 +20,7 @@
 
 - (NSURL *)base {
   if (!_base) {
-      _base = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@",kSchemaURL, kBaseURL]];
+      _base = [[NSURL URLWithString:[NSString stringWithFormat:@"%@://%@",kSchemaURL, kBaseURL]] retain];
   }
   return _base;
 }
