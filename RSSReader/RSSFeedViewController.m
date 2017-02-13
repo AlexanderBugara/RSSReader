@@ -24,23 +24,20 @@
   
   [self setupUI];
   
+  [self startLoading];
   __weak __typeof(self) weakSelf = self;
-  [self.feedDataService feedAsync:^(RSSFeed *feed) {
-    
-    [weakSelf.dataSourse setFeed:feed complition:^{
-      weakSelf.navigationItem.title = weakSelf.dataSourse.feedTitle;
-      [weakSelf.tableView reloadData];
-    }];
-    
+  [self.feedDataService updateDataSourceOffline:^{
+    [weakSelf stopLoading];
+    [weakSelf.tableView reloadData];
   }];
   
 }
 
-- (void)loadingDidStart {
+- (void)startLoading {
   self.navigationItem.title = NSLocalizedString(@"Loading...", @"Loading...");
 }
 
-- (void)loadingDidFinish {
+- (void)stopLoading {
   self.navigationItem.title = self.dataSourse.feedTitle;
 }
 
@@ -53,7 +50,7 @@
 
 - (RSSFeedDataService *)feedDataService {
   if (!_feedDataService) {
-    _feedDataService = [RSSFeedDataService new];
+    _feedDataService = [[RSSFeedDataService alloc] initWithDataSource:self.dataSourse];
   }
   return _feedDataService;
 }

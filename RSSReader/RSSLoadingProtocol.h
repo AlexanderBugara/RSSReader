@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @protocol RSSLoadingProtocol <NSObject>
-- (void)loadingDidStart;
-- (void)loadingDidFinish;
+- (void)startLoading;
+- (void)stopLoading;
 @end

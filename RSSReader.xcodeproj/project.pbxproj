@@ -42,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		112365FA1E51EA1B00FDA218 /* RSSDataSourceProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RSSDataSourceProtocol.h; path = RSSReader/RSSDataSourceProtocol.h; sourceTree = "<group>"; };
+		116AEC541E51D3A4008D41C2 /* RSSFeedDataServiceProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RSSFeedDataServiceProtocol.h; path = RSSReader/RSSFeedDataServiceProtocol.h; sourceTree = "<group>"; };
 		11A5C3D21E4CA00200BDDBC6 /* RSSReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11A5C3D61E4CA00200BDDBC6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		11A5C3D81E4CA00200BDDBC6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -214,6 +216,8 @@
 				11E2C0F31E4E2BC800C88BB9 /* RSSPersistentStorageProtocol.h */,
 				11E2C12E1E4E30F300C88BB9 /* RSSMaperProtocol.h */,
 				11E2C13C1E4F8C4A00C88BB9 /* RSSLoadingProtocol.h */,
+				116AEC541E51D3A4008D41C2 /* RSSFeedDataServiceProtocol.h */,
+				112365FA1E51EA1B00FDA218 /* RSSDataSourceProtocol.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -478,7 +482,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -516,7 +520,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

@@ -22,8 +22,9 @@
 @synthesize networkManager = _networkManager;
 @synthesize urlConstructor = _urlConstructor;
 @synthesize persistentStorage = _persistentStorage;
+@synthesize dataSource = _dataSource;
 
-- (void)feedAsync:(void(^)(RSSFeed *result))complitionHandler {
+- (void)feedUpdateAsync:(void(^)(RSSFeed *result))complitionHandler {
   
   Sequencer *sequencer = [[Sequencer alloc] init];
   
@@ -107,7 +108,52 @@
   [_persistentStorage release];
   _persistentStorage = nil;
   
+  _dataSource = nil;
   [super dealloc];
+}
+
+- (void)feedCashed:(void(^)(RSSFeed *result))complitionHandler {
+  [self.persistentStorage feedAsync:^(RSSFeed *feed) {
+    complitionHandler(feed);
+  }];
+}
+
+- (instancetype)initWithDataSource:(id <RSSDataSourceProtocol>) dataSource {
+  if (self = [super init]) {
+    _dataSource = dataSource;
+  }
+  return self;
+}
+
+- (void)updateDataSourceOffline:(void(^)(void))complitionHandler {
+  
+  __weak __typeof(self) weakSelf = self;
+  
+  [self.persistentStorage feedAsync:^(RSSFeed *feed) {
+    [weakSelf.dataSource setFeed:feed complition:^{
+      complitionHandler();
+    }];
+  }];
+  
+}
+
+- (void)updateDataSourceOnline:(void(^)(void))complitionHandler {
+  
+  __weak __typeof(self) weakSelf = self;
+  
+  [self feedUpdateAsync:^(RSSFeed *feed) {
+    [weakSelf.dataSource setFeed:feed complition:^{
+      complitionHandler();
+    }];
+  }];
+}
+
+- (instancetype)init {
+  [self release];
+  @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                 reason:@"-init is not a valid initializer for the class RSSFeedDataService"
+                               userInfo:nil];
+  return nil;
 }
 
 @end
