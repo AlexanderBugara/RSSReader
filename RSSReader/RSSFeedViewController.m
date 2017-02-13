@@ -26,7 +26,7 @@
   
   [self startLoading];
   __weak __typeof(self) weakSelf = self;
-  [self.feedDataService updateDataSourceOffline:^{
+  [self.feedDataService updateDataSourceOnlineIfNeedIt:^{
     [weakSelf stopLoading];
     [weakSelf.tableView reloadData];
   }];
@@ -64,11 +64,30 @@
 }
 
 - (void)setupUI {
+  [self setupTable];
+  [self setupPullToRefresh];
+}
+
+- (void)setupTable {
   self.tableView.estimatedRowHeight = 500;
   self.tableView.rowHeight = UITableViewAutomaticDimension;
-
+  
   self.tableView.delegate = self;
   self.tableView.dataSource = self;
+}
+
+- (void)setupPullToRefresh {
+  self.refreshControl = [[UIRefreshControl alloc] init];
+  self.refreshControl.backgroundColor = [UIColor purpleColor];
+  self.refreshControl.tintColor = [UIColor whiteColor];
+  [self.refreshControl addTarget:self
+                          action:@selector(updateData:)
+                forControlEvents:UIControlEventValueChanged];
+}
+
+#pragma mark - Pull to refresh action
+
+- (void)updateData:(id)sender {
   
 }
 

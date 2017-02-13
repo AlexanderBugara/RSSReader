@@ -73,6 +73,9 @@
   
 }
 
+
+
+
 - (RSSNetworkManager *)networkManager {
   if (!_networkManager) {
       _networkManager = [RSSNetworkManager  new];
@@ -156,4 +159,54 @@
   return nil;
 }
 
+- (void)updateDataSourceOnlineIfNeedIt:(void(^)(void))complitionHandler {
+  __weak __typeof(self) weakSelf = self;
+
+  Sequencer *sequencer = [[Sequencer alloc] init];
+  
+  [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
+    [self.persistentStorage feedAsync:^(RSSFeed *feed) {
+      if (feed) {
+        [weakSelf.dataSource setFeed:feed complition:^{
+          complitionHandler();
+        }];
+      } else {
+        completion(feed);
+      }
+    }];
+  }];
+
+  [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
+    [self.networkManager networkRequest:[self.urlConstructor feedUrl]
+                       complitinHendler:^(NSData *data, NSError *error) {
+                         completion(data);
+                       }];
+  }];
+  
+  [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
+    NSError *error;
+    SMXMLDocument *document = [SMXMLDocument documentWithData:result error:&error];
+    completion(document);
+  }];
+  
+  [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
+    [weakSelf.persistentStorage save:result mapper:[[RSSMapper new] autorelease] complitionHandler:^{
+      completion(nil);
+    }];
+  }];
+  
+  [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
+    [weakSelf.persistentStorage feedAsync:^(RSSFeed *result) {
+      completion(result);
+    }];
+  }];
+  
+  [sequencer enqueueStep:^(id result, SequencerCompletion completion) {
+    [weakSelf.dataSource setFeed:result complition:^{
+      complitionHandler();
+    }];
+  }];
+  [sequencer run];
+  
+}
 @end
