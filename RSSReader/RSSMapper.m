@@ -33,10 +33,8 @@
   NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
   [dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
   [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"PDT"]];
-  NSDate *dateFromString = [[NSDate alloc] init];
-  
-  dateFromString = [dateFormatter dateFromString:dateString];
-  
+  NSDate *dateFromString = [dateFormatter dateFromString:dateString];
+  [dateFormatter release];
   return dateFromString;
 }
 

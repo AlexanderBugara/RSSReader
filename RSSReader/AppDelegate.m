@@ -14,10 +14,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
-  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
   UINavigationController *navigationController = [UINavigationController new];
-  navigationController.viewControllers = @[[RSSFeedViewController new]];
+  RSSFeedViewController *rssViewController = [RSSFeedViewController new];
+  navigationController.viewControllers = @[rssViewController];
+  [rssViewController release];
   self.window.rootViewController = navigationController;
+  [navigationController release];
   self.window.backgroundColor = [UIColor whiteColor];
   [self.window makeKeyAndVisible];
   

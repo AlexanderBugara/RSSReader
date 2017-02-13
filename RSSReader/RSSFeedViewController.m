@@ -85,7 +85,9 @@
 }
 
 - (void)setupPullToRefresh {
-  self.refreshControl = [[UIRefreshControl alloc] init];
+  UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+  self.refreshControl = refreshControl;
+  [refreshControl release];
   self.refreshControl.backgroundColor = [UIColor whiteColor];
   self.refreshControl.tintColor = [UIColor grayColor];
   [self.refreshControl addTarget:self
@@ -123,6 +125,7 @@
     [messageLabel sizeToFit];
     
     self.tableView.backgroundView = messageLabel;
+    [messageLabel release];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
   } else {
@@ -156,6 +159,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   RSSDetailViewController *detailViewController = [[RSSDetailViewController alloc] initWithURL:[self.dataSourse urlAtIndexPath:indexPath] title:[self.dataSourse tittleAtIndexPath:indexPath]];
   
   [self.navigationController pushViewController:detailViewController animated:YES];
+  [detailViewController release];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
