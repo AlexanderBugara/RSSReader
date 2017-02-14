@@ -204,5 +204,15 @@ complitionHandler:(void(^)(void))complitionHandler {
   }
 }
 
+- (void)dealloc {
+  
+  [_managedObjectModel release];
+  _managedObjectModel = nil;
+  [_managedObjectContext release];
+  _managedObjectContext = nil;
+  [_persistentStoreCoordinator release];
+  _persistentStoreCoordinator = nil;
+  [super dealloc];
+}
 
 @end
