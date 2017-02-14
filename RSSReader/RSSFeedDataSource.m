@@ -63,6 +63,10 @@
 - (void)dealloc {
   [_feed release];
   _feed = nil;
+  
+  [_items release];
+  _items = nil;
+  
   [_feedTitle release];
   _feedTitle = nil;
   [super dealloc];

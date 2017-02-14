@@ -96,7 +96,7 @@
             startingLineNumber = "29"
             endingLineNumber = "29"
             landmarkName = "-setFeed:complition:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -112,7 +112,7 @@
             startingLineNumber = "32"
             endingLineNumber = "32"
             landmarkName = "-setFeed:complition:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -128,7 +128,7 @@
             startingLineNumber = "33"
             endingLineNumber = "33"
             landmarkName = "-setFeed:complition:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -144,7 +144,7 @@
             startingLineNumber = "27"
             endingLineNumber = "27"
             landmarkName = "-setFeed:complition:"
-            landmarkType = "5">
+            landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "No"

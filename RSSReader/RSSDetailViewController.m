@@ -28,6 +28,8 @@
 - (void)dealloc {
   [_url release];
   _url = nil;
+  [_title release];
+  _title = nil;
   [super dealloc];
 }
 
