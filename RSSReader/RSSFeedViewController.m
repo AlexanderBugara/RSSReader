@@ -35,6 +35,8 @@
     
     [weakSelf endLoading];
     [weakSelf updateTable];
+    
+    if (error) [weakSelf presentAlert:error];
   }];
   
 }
@@ -107,6 +109,7 @@
     [(UIRefreshControl *)sender endRefreshing];
     [weakSelf endLoading];
     [weakSelf updateTable];
+    if (error) [weakSelf presentAlert:error];
   }];
 }
 
@@ -177,5 +180,16 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)updateTable {
   [self.tableView reloadData];
+}
+
+- (void)presentAlert:(NSError *)error {
+  
+  UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+                                                   message:[error localizedDescription]
+                                                  delegate:nil
+                                         cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+
+                                         otherButtonTitles:nil] autorelease];
+  [alert show];
 }
 @end

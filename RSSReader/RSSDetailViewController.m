@@ -60,10 +60,21 @@
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+  [self presentAlert:error];
   [self updateTitle];
 }
 
 - (void)updateTitle {
   self.navigationItem.title = self.title;
+}
+
+- (void)presentAlert:(NSError *)error {
+  
+  UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+                                                    message:[error localizedDescription]
+                                                   delegate:nil
+                                         cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                          otherButtonTitles:nil] autorelease];
+  [alert show];
 }
 @end
