@@ -39,6 +39,7 @@
   [self.view addSubview:webView];
   
   webView.delegate = self;
+  webView.scalesPageToFit = YES;
   
   [webView loadRequest:[NSURLRequest requestWithURL:self.url]];
   [webView release];
