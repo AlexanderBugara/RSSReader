@@ -4,7 +4,27 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Expecta.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Masonry.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Nocilla.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>OCHamcrest.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>OCMockito.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -14,7 +34,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-RSSReaderTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Sequencer.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Specta.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -22,7 +52,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>3BEA1B17062BB376FBF31505CE43DA7E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>3DBEF753B31CA4970E418B142F7DD902</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4E151399D999308E23F26994F6CBFF1C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5D161BA711701D7E41E02A5702FD024E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A581140716ED12BF89E1FF07F013CBE8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -32,7 +82,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>C9451F7F95D95F12D8C01AF665AA7E72</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>D52144DE9D7255DE912490FF5A806573</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FBE46E7A3DC098D89B8502F393BB69BF</key>
 		<dict>
 			<key>primary</key>
 			<true/>

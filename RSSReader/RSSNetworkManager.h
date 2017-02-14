@@ -11,6 +11,7 @@
 @interface RSSNetworkManager : NSObject
 - (void)networkRequest:(NSURL *)url 
       complitinHendler:(void(^)(NSData *data, NSError *error))complitionHandler;
+
 - (instancetype)initWithSession:(NSURLSession *)session;
 
 @property (nonatomic, retain, readonly) NSURLSession *session;

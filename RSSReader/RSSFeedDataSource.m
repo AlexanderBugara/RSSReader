@@ -68,8 +68,4 @@
   [super dealloc];
 }
 
-- (NSDate *)dateAtIndexPath:(NSIndexPath *)indexPath {
-  RSSItem *item = self.items[indexPath.row];
-  return item.pubDate;
-}
 @end

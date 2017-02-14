@@ -20,7 +20,6 @@
 - (NSURL *)urlAtIndexPath:(NSIndexPath *)indexPath;
 - (NSString *)tittleAtIndexPath:(NSIndexPath *)indexPath;
 - (NSString *)descriptionAtIndexPath:(NSIndexPath *)indexPath;
-- (NSDate *)dateAtIndexPath:(NSIndexPath *)indexPath;
 @end
 
 #endif /* RSSDataSourceProtocol_h */
